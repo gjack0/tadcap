@@ -6,7 +6,8 @@ Page({
     vue:{},
     time:'',
     projectId:null,
-    qrflag:false
+    qrflag:false,
+    nickname:null
   },
 
 share:function(event){
@@ -85,6 +86,17 @@ change:function(){
                 time:time,
                 qrflag:flag
             })
+            wx.request({
+                url: 'https://tadcap.com/getUserInfo',
+                data:{
+                    userId: res.data.creator
+                },
+                success:function(res){
+                    that.setData({
+                        nickname:res.data.nickname
+                    });
+                }
+            })
         }
     })
   },
@@ -103,8 +115,9 @@ change:function(){
   
   },
   onShareAppMessage(){
+      let title = '@' +this.data.nickname + '邀请你参加签到';
       return {
-          title: '你有一个新的签到，请查收',
+          title: title,
           path: '/pages/share/share?id=' + this.data.projectId,
           success: function (res) {
               // 转发成功

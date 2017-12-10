@@ -1,4 +1,11 @@
 const app = getApp();
+// 引入SDK核心类
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+
+// 实例化API核心类
+var map = new QQMapWX({
+    key: '437BZ-FWPR4-JTHUA-XGR6Z-X5BPH-QXFDW' // 必填
+});
 
 Page({
   data: {
@@ -109,6 +116,7 @@ Page({
                         success: function(res) {
                             let weidu = res.longitude;
                             let jingdu = res.latitude;
+                            console.log(res.accuracy)
                             for(let i = 0; i<count; i++){
                                 wx.request({
                                     url: 'https://tadcap.com/getProjectInfo?projectId=' + projectIdInfo[i],
@@ -118,11 +126,22 @@ Page({
                                         console.log(res.data.longitude)
                                         console.log(jingdu)
                                         console.log(res.data.latitude)
-                                        console.log('@@@@@@@@@@@@');
-                                        console.log(Math.abs(weidu - res.data.longitude));
-                                        console.log(Math.abs(jingdu - res.data.latitude));
+                                        
+                                        // 调用接口
+                                        map.reverseGeocoder({
+                                            location: {
+                                                latitude: res.data.latitude,
+                                                longitude: res.data.longitude
+                                            },
+                                            success: function (res) {
+                                                console.log(res);
+                                            },
+                                            fail: function (res) {
+                                                console.log(res);
+                                            }
+                                        });
                                         let QR = res.data.qrcode;
-                                        if ((Math.abs(weidu - res.data.longitude) < 0.005) && (Math.abs(jingdu - res.data.latitude) < 0.0022)){
+                                        if (Math.sqrt((weidu - res.data.longitude) * (weidu - res.data.longitude) + (jingdu - res.data.latitude) * (jingdu - res.data.latitude)) < 0.001){
                                             //无需扫码签到
                                             if(QR === 0){
                                                 //向服务器发送签到成功信息

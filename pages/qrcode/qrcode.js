@@ -15,7 +15,7 @@ Page({
       let that = this;
       wx.showModal({
           title: '使用方法',
-          content: '点击确认以后截图保存，在活动现场放置打印好的二维码',
+          content: '点击确认以后截图保存，在活动现场放置打印好的二维码或者在手机展示本页面',
           showCancel:false,
       })
       wx.request({

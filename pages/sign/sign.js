@@ -18,7 +18,7 @@ Page({
       time: '',
       place_name:'点我选择地点',
       place_address:'',
-      css1:'add',
+      css1:'chosed',
       css2: 'add',
       css3: 'add',
       css4: 'add',
@@ -123,8 +123,8 @@ check:function(){
                 that.setData({
                     place_name:res.name,
                     place_address: res.address,
-                    latitude: res.latitude,
-                    longitude: res.longitude
+                    latitude: res.latitude.toFixed(4),
+                    longitude: res.longitude.toFixed(4)
                 })
             },
         })
@@ -315,7 +315,7 @@ check:function(){
                 longitude:q,
                 latitude:w,//纬度
                 information: e.detail.value.add,
-                diyName1:them.data.diy1,
+                diyName1: '姓名',
                 diyName2: them.data.diy2,
                 diyName3: them.data.diy3,
                 diyName4: them.data.diy4,

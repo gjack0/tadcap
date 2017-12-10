@@ -70,7 +70,7 @@
 
 <view class="chose">
 
-    <view class="{{css1}}" bindtap="changeCss1" data-name="xingming">
+    <view class="{{css1}}"  data-name="xingming">
         姓名
     </view>
     <view class="{{css2}}" bindtap="changeCss2"  data-name="phone">
